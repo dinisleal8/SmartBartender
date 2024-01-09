@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <style>
+        body {
+            background-color: black;
+            height: 100%;
+            margin: 0;
+            justify-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            height: 50%;
+        }
+
+        h1 {
+            font-family: Times New Roman;
+            letter-spacing: 5px;
+            text-align: center;
+            color: white;
+        }
+
+        .settings {
+
+            position: absolute;
+            right: 0;
+            top: 0;
+            display: block;
+            height: 80px;
+            width: 80px;
+            margin: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .settings:hover {
+            transform: scale(1.2) rotate(70deg);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #F4DFC8;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 8px;
+            max-width: 300px;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .login-form {
+            text-align: center;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .close:hover {
+            color: red;
+        }
+
+        .modal.show {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Toque aqui para prosseguir</h1>
+        <img src="{% static 'logo.png' %}" alt="">
+    </div>
+
+    <button id='settings' style="background-color: rgba(0, 0, 0, 0); border: none;">
+        <img class='settings' src="{% static 'settings.png' %}">
+    </button>
+
+    <!-- MODAL PARA LOGIN -->
+    <div id="loginModal" class="modal">
+        <span class="close" onclick="fecharModal()">&times;</span>
+        <div class="login-form">
+            <h2>Login</h2>
+            {% if error %}
+                <p>{{ error }}</p>
+            {% endif %}
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var modal = document.getElementById('loginModal');
+        var settingsButton = document.getElementById('settings');
+
+        function abrirModal(event) {
+            event.stopPropagation(); // Impede a propagação do evento para o corpo da página
+            modal.style.display = 'block';
+
+            setTimeout(function () {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+        function fecharModal(event) {
+            event.stopPropagation(); // Impede a propagação do evento para o botão de configurações
+            modal.classList.remove('show');
+            modal.style.animation = 'zoom-out 0.6s';
+
+            setTimeout(function () {
+                modal.style.display = 'none';
+                modal.style.animation = '';
+            }, 600);
+        }
+
+        function efetuarLogin() {
+            fecharModal();
+        }
+
+        function redirecionar(event) {
+            if (!modal.classList.contains('show')) {
+                window.location.href = '/select/';
+            }
+
+            event.stopPropagation();
+        }
+
+        settingsButton.addEventListener('click', abrirModal);
+        document.addEventListener('click', redirecionar); 
+
+        document.querySelector('.close').addEventListener('click', fecharModal);
+
+        document.querySelector('.login-form button').addEventListener('click', efetuarLogin);
+
+    </script>
+</body>
+</html>
