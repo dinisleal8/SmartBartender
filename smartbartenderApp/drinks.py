@@ -1,8 +1,8 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 from django.contrib import admin
 from django.urls import path 
-from GPIOEmulator.EmulatorGUI import GPIO
+#from GPIOEmulator.EmulatorGUI import GPIO
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -33,26 +33,26 @@ def drink1(request):
         # GPIO.output(bomba2, GPIO.HIGH)
         # GPIO.output(bomba3, GPIO.HIGH)
         # GPIO.output(bomba4, GPIO.HIGH)
-        GPIO.output(bomba5, GPIO.LOW)
-        GPIO.output(bomba6, GPIO.LOW)
+        GPIO.output(bomba5, GPIO.HIGH)
+        GPIO.output(bomba6, GPIO.HIGH)
 
-        GPIO.output(bomba1, GPIO.HIGH)
-        GPIO.output(bomba2, GPIO.HIGH)
-        GPIO.output(bomba3, GPIO.HIGH)
-        GPIO.output(bomba4, GPIO.HIGH)
-
-        GPIO.output(luz, GPIO.HIGH)
-        print('bombas e luz ligadas')
-
-        time.sleep(9)
-
+        GPIO.output(bomba1, GPIO.LOW)
         GPIO.output(bomba2, GPIO.LOW)
         GPIO.output(bomba3, GPIO.LOW)
         GPIO.output(bomba4, GPIO.LOW)
 
-        time.sleep(9)
-        GPIO.output(bomba1, GPIO.LOW)
         GPIO.output(luz, GPIO.LOW)
+        print('bombas e luz ligadas')
+
+        time.sleep(2)
+
+        GPIO.output(bomba2, GPIO.HIGH)
+        GPIO.output(bomba3, GPIO.HIGH)
+        GPIO.output(bomba4, GPIO.HIGH)
+
+        time.sleep(2)
+        GPIO.output(bomba1, GPIO.HIGH)
+        GPIO.output(luz, GPIO.HIGH)
         
         time.sleep(1)
         GPIO.cleanup()

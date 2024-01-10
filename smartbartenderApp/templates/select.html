@@ -60,6 +60,8 @@
             color: white;
             z-index: 2;
         }
+        
+
 
         .cocktail-info {
             margin-top: 20px;
@@ -88,7 +90,7 @@
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 22px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -96,7 +98,7 @@
         }
 
         .back-button {
-            position: absolute;
+            position: fixed;
             top: 10px;
             left: 10px;
             background-color: #4CAF50;
@@ -106,9 +108,12 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            z-index: 3;
         }
 
         .loading-overlay {
+            z-index: 2;
+            pointer-events: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -121,31 +126,59 @@
         }
 
         .loading-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
             color: white;
         }
 
         .loader {
-            border: 8px solid #f3f3f3;
             border-top: 8px solid #3498db;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 180px;
+            height: 180px;
             animation: spin 1s linear infinite;
+            margin-top: 8px;
+            margin-left: auto;
+            margin-right: auto; 
         }
-
+        
+        button {
+            margin-top: 10px
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        h2 {
+            font-size: 32px;
+            }
+        
+        p {
+            font-size: 22px
+            }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-
+        
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
 
     </style>
 </head>
 
 <body>
-    <a href="/index/" class="back-button">Voltar</a>
+    <button class="back-button" onclick="window.location.href='/index/'">Voltar</button>
+
     <div class="slider-container">
         <div class="slider">
             <div class="slides">
@@ -242,66 +275,109 @@
                         <button id='cocktail' class="cocktail-button" onclick="loading('/drink6/')">FAZER!</button>
                     </div>
                 </div>
-        </div>
-            <div class="navigation">
-            <button class="arrow" onclick="prevSlide()">&#10094;</button>
-            <button class="arrow" onclick="nextSlide()">&#10095;</button>
-        </div>
     </div>
-
     <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-content">
-            <p>Preparando o seu cocktail...</p>
-            <div class="loader"></div>
-        </div>
+    <div class="loading-content">
+        <div class="loader"></div>
+        
+        <p>A fazer a bebida...</p>
+        <br>
+        <button class="cocktail-button" onclick="window.loading.href='/index/'">Cancelar</button>
     </div>
-    
+</div>
     <script>
-            let currentIndex = 0;
+        let currentIndex = 0;
+        let initialX;
+        let isDragging = false;
 
-            function nextSlide() {
-                if (currentIndex < document.querySelectorAll('.slide').length - 1) {
-                    currentIndex++;
-                } else {
-                    currentIndex = 0;
-                }
-                updateSlider();
+        const slider = document.querySelector('.slider');
+        const nextArrow = document.querySelector('.arrow.next');
+        const prevArrow = document.querySelector('.arrow.prev');
+
+        slider.addEventListener('mousedown', handleDragStart, false);
+        slider.addEventListener('mousemove', handleDragMove, false);
+        slider.addEventListener('mouseup', handleDragEnd, false);
+
+        slider.addEventListener('touchstart', handleTouchStart, false);
+        slider.addEventListener('touchmove', handleTouchMove, false);
+
+        nextArrow.addEventListener('click', nextSlide);
+        prevArrow.addEventListener('click', prevSlide);
+
+        function handleDragStart(event) {
+            isDragging = true;
+            initialX = event.clientX;
+        }
+
+        function handleDragMove(event) {
+            if (!isDragging) return;
+
+            const currentX = event.clientX;
+            const deltaX = initialX - currentX;
+
+            if (deltaX > 20) {
+                nextSlide();
+                isDragging = false;
+            } else if (deltaX < -20) {
+                prevSlide();
+                isDragging = false;
             }
+        }
 
-            function prevSlide() {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                } else {
-                    currentIndex = document.querySelectorAll('.slide').length - 1;
-                }
-                updateSlider();
+        function handleDragEnd() {
+            isDragging = false;
+        }
+
+        function handleTouchStart(event) {
+            initialX = event.touches[0].clientX;
+        }
+
+        function handleTouchMove(event) {
+            if (!initialX) return;
+
+            const currentX = event.touches[0].clientX;
+            const deltaX = initialX - currentX;
+
+            if (deltaX > 20) {
+                nextSlide();
+                initialX = null;
+            } else if (deltaX < -20) {
+                prevSlide();
+                initialX = null;
             }
+        }
 
-            function updateSlider() {
-                const slides = document.querySelector('.slides');
-                slides.style.transform = `translateX(${-currentIndex * 100}%)`;
+        function nextSlide() {
+            if (currentIndex < document.querySelectorAll('.slide').length - 1) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
             }
+            updateSlider();
+        }
 
-            function loading(url) {
-                const loadingOverlay = document.getElementById('loadingOverlay');
-                const cocktailInfo = document.querySelector('.cocktail-info');
-                const navigation = document.querySelector('.navigation');
-                const title = document.querySelector('.content h2');
-                const botao = document.querySelector('.cocktail-button');
-
-                cocktailInfo.style.display = 'none';
-                navigation.style.display = 'none';
-                title.style.display = 'none';
-                botao.style.display = 'none';
-
-                loadingOverlay.style.display = 'flex';
-
-                setTimeout(() => {
-                    window.location.href = url;
-                }, 300);  
+        function prevSlide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = document.querySelectorAll('.slide').length - 1;
             }
+            updateSlider();
+        }
 
+        function updateSlider() {
+            const slides = document.querySelector('.slides');
+            slides.style.transform = `translateX(${-currentIndex * 100}%)`;
+        }
 
+        function loading(url) {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.style.display = 'flex';
+            
+            setTimeout(() => {
+                window.location.href = url;
+            }, 800); 
+        }
     </script>
 </body>
 
