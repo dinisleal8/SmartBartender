@@ -1,8 +1,8 @@
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import time
 from django.contrib import admin
 from django.urls import path 
-#from GPIOEmulator.EmulatorGUI import GPIO
+from GPIOEmulator.EmulatorGUI import GPIO
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 

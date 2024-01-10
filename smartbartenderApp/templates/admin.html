@@ -63,10 +63,26 @@
     <div class="conteudo" id="conteudoContas" style="display: none;">
         <!-- Conteúdo para Gestão de Contas -->
 
-        <h1>gestao de contas</h1>
-
+        <h1>Gerir Contas</h1>
+        <div class="login-form">
+            <h2>Criar contas</h2>
+                <p>{{ error }}</p>
+            <form method="post" ">
+                {% csrf_token %}
+                <label for="username">Username:</label>
+                {{form.username}}
+                <br>
+                <label for="password">Password:</label>
+                {{form.password1}}
+                <br>
+                <label for="password">Password:</label>
+                {{form.password2}}
+                <br>
+                <button type="submit">Criar Conta</button>
+            </form>
     </div>
-
+    {{form.errors}}
+    
     <div class="conteudo" id="conteudoBombas" style="display: none;">
         <!-- Conteúdo para Bombas -->
         <h2>Bombas</h2>
@@ -78,8 +94,6 @@
         <h2>Dados</h2>
         <p>Visualize e analise dados importantes.</p>
     </div>
-
-    <script src="script.js"></script>
 </body>
 <script>
     function mostrarContas() {

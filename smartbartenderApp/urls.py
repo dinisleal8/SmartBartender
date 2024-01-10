@@ -4,7 +4,7 @@ from . import views
 from . import drinks
 
 urlpatterns = [
-    path("index/", views.index),
+    path("index/", views.index, name='index'),
     path("select/", views.select),
     path("drink1/", drinks.drink1),
     path("drink2/", drinks.drink2),
@@ -12,7 +12,6 @@ urlpatterns = [
     path("drink4/", drinks.drink4),
     path("drink5/", drinks.drink5),
     path("drink6/", drinks.drink6),
-    path('login/', views.login_view, name='login'),
-    path('admin/', views.admin_view, name='admin'),
+    path('admin/', views.admin, name='admin'),
     
 ]

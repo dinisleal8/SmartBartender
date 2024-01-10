@@ -4,7 +4,7 @@
 <head>
     {% load static %}
     <style>
-        body {
+ body {
             background-color: #1a1a1a;
             margin: 0;
             font-family: Arial, sans-serif;
@@ -12,6 +12,7 @@
         }
 
         .slider-container {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -31,6 +32,7 @@
         }
 
         .slide {
+            z-index: 0;
             min-width: 100%;
             box-sizing: border-box;
             position: relative;
@@ -48,7 +50,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
+            z-index: 2;
         }
 
         .content {
@@ -58,10 +60,8 @@
             transform: translate(-50%, -50%);
             text-align: center;
             color: white;
-            z-index: 2;
+            z-index: 3;
         }
-        
-
 
         .cocktail-info {
             margin-top: 20px;
@@ -74,19 +74,21 @@
             display: flex;
             justify-content: space-between;
             transform: translateY(-50%);
-            z-index: 2;
+            z-index: 1; 
         }
 
         .arrow {
-            margin: 150px;
             color: white;
             font-size: 40px;
             cursor: pointer;
             background: rgba(0, 0, 0, 0.288);
             border: none;
+            margin: 0 100px; 
         }
 
+
         .cocktail-button {
+            z-index: 3;
             background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
@@ -146,7 +148,7 @@
         }
         
         button {
-            margin-top: 10px
+            margin-top: 10px;
             background-color: #3498db;
             color: white;
             padding: 10px 20px;
@@ -172,7 +174,6 @@
             0% { -webkit-transform: rotate(0deg); }
             100% { -webkit-transform: rotate(360deg); }
         }
-
     </style>
 </head>
 
@@ -189,13 +190,13 @@
                     <div class="content">
                         <h2>Sex on the Beach</h2>
                         <div class="cocktail-info">
-                            <p>★★★☆☆ (3/5)</p>
+                            <p>Teor: ★★★★☆ (4/5)</p>
                             <p>60 ml Cola</p>
                             <p>30 ml Vodka Branca</p>
                             <p>30 ml Sumo de Laranja</p>
                             <p>30 ml Licor de Pêssego</p>
+                            <button class="cocktail-button" onclick="loading('/drink1/')">FAZER!</button>
                         </div>
-                        <button class="cocktail-button" onclick="loading('/drink1/')">FAZER!</button>
                     </div>
                 </div>
 
@@ -206,7 +207,7 @@
                     <div class="content">
                         <h2>Cuba Libre Tropical</h2>
                         <div class="cocktail-info">
-                            <p>★★★★☆ (4/5)</p>
+                            <p>Teor: ★★★☆☆ (3/5)</p>
                             <p>60 ml Cola</p>
                             <p>30 ml Rum</p>
                         </div>
@@ -221,7 +222,7 @@
                     <div class="content">
                         <h2>Pêssego Sunrise</h2>
                         <div class="cocktail-info">
-                            <p>★★☆☆☆ (2/5)</p>
+                            <p>Teor: ★★☆☆☆ (2/5)</p>
                             <p>45 ml Licor de Pêssego</p>
                             <p>30 ml Sumo de Laranja</p>
                             <p>150 ml Limonada</p>
@@ -237,7 +238,7 @@
                     <div class="content">
                         <h2>Laranjada Tropical</h2>
                         <div class="cocktail-info">
-                            <p>★★★☆☆ (3/5)</p>
+                            <p>Teor: ★★☆☆☆ (2/5)</p>
                             <p>60 ml Sumo de Laranja</p>
                             <p>30 ml Rum</p>
                         </div>
@@ -252,7 +253,7 @@
                     <div class="content">
                         <h2>Cola Crush</h2>
                         <div class="cocktail-info">
-                            <p>★★★☆☆ (3/5)</p>
+                            <p>Teor: ★★☆☆☆ (2/5)</p>
                             <p>60 ml Cola</p>
                             <p>30 ml Vodka Branca</p>
                         </div>
@@ -267,7 +268,7 @@
                     <div class="content">
                         <h2>Vodka Peach Fizz</h2>
                         <div class="cocktail-info">
-                            <p>★★☆☆☆ (2/5)</p>
+                            <p>Teor: ★★★★☆ (4/5)</p>
                             <p>45 ml Vodka Branca</p>
                             <p>30 ml Licor de Pêssego</p>
                             <p>150 ml Limonada</p>
@@ -276,6 +277,12 @@
                     </div>
                 </div>
     </div>
+
+    <div class="navigation">
+        <button class="arrow" onclick="prevSlide()">&#10218;</button>
+        <button class="arrow" onclick="nextSlide()">&#10219;</button>
+    </div>
+    
     <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-content">
         <div class="loader"></div>
@@ -284,7 +291,7 @@
         <br>
         <button class="cocktail-button" onclick="window.loading.href='/index/'">Cancelar</button>
     </div>
-</div>
+
     <script>
         let currentIndex = 0;
         let initialX;
@@ -301,8 +308,13 @@
         slider.addEventListener('touchstart', handleTouchStart, false);
         slider.addEventListener('touchmove', handleTouchMove, false);
 
-        nextArrow.addEventListener('click', nextSlide);
-        prevArrow.addEventListener('click', prevSlide);
+        nextArrow.addEventListener('click', function() {
+            setTimeout(nextSlide, 100);
+        });
+
+        prevArrow.addEventListener('click', function() {
+            setTimeout(prevSlide, 100);
+        });;
 
         function handleDragStart(event) {
             isDragging = true;
