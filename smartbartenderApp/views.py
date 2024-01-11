@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import inlineformset_factory
 from django.contrib.auth import authenticate, login, logout 
+from django.contrib.auth.models import User
+
 
 from .forms import CreateUserForm
 
@@ -17,6 +19,7 @@ def index(request):
         if user is not None:
             login(request, user)
             return redirect('admin')
+        return render(request,"index.html")
     else:
         return render(request,"index.html")
     
@@ -25,12 +28,13 @@ def select(request):
     return render(request,"select.html")
 
 def admin(request):
-    form = CreateUserForm()
-    context = {'form':form}
-
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('admin') 
+    else:
+        form = CreateUserForm()
 
-    return render(request,"admin.html", context)
+    context = {'form': form}
+    return render(request, "admin.html", context)

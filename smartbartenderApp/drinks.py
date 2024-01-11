@@ -1,8 +1,8 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 from django.contrib import admin
 from django.urls import path 
-from GPIOEmulator.EmulatorGUI import GPIO
+#from GPIOEmulator.EmulatorGUI import GPIO
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -44,23 +44,22 @@ def drink1(request):
         GPIO.output(luz, GPIO.LOW)
         print('bombas e luz ligadas')
 
-        time.sleep(2)
+        time.sleep(12)
 
         GPIO.output(bomba2, GPIO.HIGH)
         GPIO.output(bomba3, GPIO.HIGH)
-        GPIO.output(bomba4, GPIO.HIGH)
 
-        time.sleep(2)
+        time.sleep(4)
+        GPIO.output(bomba4, GPIO.HIGH)
+        
+        time.sleep(4)
+        
         GPIO.output(bomba1, GPIO.HIGH)
         GPIO.output(luz, GPIO.HIGH)
         
         time.sleep(1)
         GPIO.cleanup()
         return render(request, "conclued.html")
-
-    except Exception as e:
-        # Lidar com a exceção, se necessário
-        print(f"Ocorreu uma exceção: {e}")
 
     finally:
         GPIO.cleanup()
@@ -102,12 +101,13 @@ def drink2(request):
         GPIO.output(luz, GPIO.HIGH)
         print('bombas e luz ligadas')
 
-        time.sleep(9)
+        time.sleep(20)
 
         GPIO.output(bomba6, GPIO.HIGH)
 
-        time.sleep(9)
+        time.sleep(20)
         GPIO.output(bomba1, GPIO.HIGH)
+        GPIO.output(luz, GPIO.HIGH)
         
         time.sleep(1)
         GPIO.cleanup()
@@ -145,25 +145,30 @@ def drink3(request):
         GPIO.setup(luz, GPIO.OUT)
 
 
-        # GPIO.output(bomba1, GPIO.LOW)
+        GPIO.output(bomba1, GPIO.LOW)
         GPIO.output(bomba2, GPIO.LOW)
-        GPIO.output(bomba3, GPIO.LOW)
-        GPIO.output(bomba4, GPIO.LOW)
-        GPIO.output(bomba5, GPIO.LOW)
-        # GPIO.output(bomba6, GPIO.LOW)
+        #GPIO.output(bomba3, GPIO.LOW)
+        #GPIO.output(bomba4, GPIO.LOW)
+        #GPIO.output(bomba5, GPIO.LOW)
+        GPIO.output(bomba6, GPIO.LOW)
 
-        GPIO.output(bomba1, GPIO.HIGH)
-        GPIO.output(bomba6, GPIO.HIGH)
+        GPIO.output(bomba3, GPIO.HIGH)
+        GPIO.output(bomba4, GPIO.HIGH)
+        GPIO.output(bomba5, GPIO.HIGH)
 
         GPIO.output(luz, GPIO.HIGH)
         print('bombas e luz ligadas')
 
-        time.sleep(9)
+        time.sleep(13)
 
-        GPIO.output(bomba6, GPIO.HIGH)
+        GPIO.output(bomba5, GPIO.HIGH)
 
-        time.sleep(9)
-        GPIO.output(bomba1, GPIO.HIGH)
+        time.sleep(14)
+        GPIO.output(bomba3, GPIO.HIGH)
+        
+        time.sleep(6)
+        GPIO.output(bomba3, GPIO.HIGH)
+        GPIO.output(luz, GPIO.HIGH)
         
         time.sleep(1)
         GPIO.cleanup()
@@ -200,25 +205,26 @@ def drink4(request):
         GPIO.setup(luz, GPIO.OUT)
 
 
-        # GPIO.output(bomba1, GPIO.LOW)
+        GPIO.output(bomba1, GPIO.LOW)
         GPIO.output(bomba2, GPIO.LOW)
-        GPIO.output(bomba3, GPIO.LOW)
+        #GPIO.output(bomba3, GPIO.LOW)
         GPIO.output(bomba4, GPIO.LOW)
         GPIO.output(bomba5, GPIO.LOW)
         # GPIO.output(bomba6, GPIO.LOW)
 
-        GPIO.output(bomba1, GPIO.HIGH)
+        GPIO.output(bomba3, GPIO.HIGH)
         GPIO.output(bomba6, GPIO.HIGH)
 
         GPIO.output(luz, GPIO.HIGH)
         print('bombas e luz ligadas')
 
-        time.sleep(9)
+        time.sleep(27)
 
         GPIO.output(bomba6, GPIO.HIGH)
 
-        time.sleep(9)
-        GPIO.output(bomba1, GPIO.HIGH)
+        time.sleep(13)
+        GPIO.output(bomba3, GPIO.HIGH)
+        GPIO.output(luz, GPIO.HIGH)
         
         time.sleep(1)
         GPIO.cleanup()
@@ -256,24 +262,25 @@ def drink5(request):
 
 
         # GPIO.output(bomba1, GPIO.LOW)
-        GPIO.output(bomba2, GPIO.LOW)
+        #GPIO.output(bomba2, GPIO.LOW)
         GPIO.output(bomba3, GPIO.LOW)
         GPIO.output(bomba4, GPIO.LOW)
         GPIO.output(bomba5, GPIO.LOW)
-        # GPIO.output(bomba6, GPIO.LOW)
+        GPIO.output(bomba6, GPIO.LOW)
 
         GPIO.output(bomba1, GPIO.HIGH)
-        GPIO.output(bomba6, GPIO.HIGH)
+        GPIO.output(bomba2, GPIO.HIGH)
 
         GPIO.output(luz, GPIO.HIGH)
         print('bombas e luz ligadas')
 
-        time.sleep(9)
+        time.sleep(20)
 
-        GPIO.output(bomba6, GPIO.HIGH)
+        GPIO.output(bomba2, GPIO.HIGH)
 
-        time.sleep(9)
+        time.sleep(20)
         GPIO.output(bomba1, GPIO.HIGH)
+        GPIO.output(luz, GPIO.HIGH)
         
         time.sleep(1)
         GPIO.cleanup()
@@ -310,25 +317,30 @@ def drink6(request):
         GPIO.setup(luz, GPIO.OUT)
 
 
-        # GPIO.output(bomba1, GPIO.LOW)
-        GPIO.output(bomba2, GPIO.LOW)
+        GPIO.output(bomba1, GPIO.LOW)
+        #GPIO.output(bomba2, GPIO.LOW)
         GPIO.output(bomba3, GPIO.LOW)
-        GPIO.output(bomba4, GPIO.LOW)
-        GPIO.output(bomba5, GPIO.LOW)
-        # GPIO.output(bomba6, GPIO.LOW)
+        #GPIO.output(bomba4, GPIO.LOW)
+        #GPIO.output(bomba5, GPIO.LOW)
+        GPIO.output(bomba6, GPIO.LOW)
 
-        GPIO.output(bomba1, GPIO.HIGH)
-        GPIO.output(bomba6, GPIO.HIGH)
+        GPIO.output(bomba2, GPIO.HIGH)
+        GPIO.output(bomba4, GPIO.HIGH)
+        GPIO.output(bomba5, GPIO.HIGH)
 
         GPIO.output(luz, GPIO.HIGH)
         print('bombas e luz ligadas')
 
-        time.sleep(9)
+        time.sleep(13)
 
-        GPIO.output(bomba6, GPIO.HIGH)
+        GPIO.output(bomba5, GPIO.HIGH)
 
-        time.sleep(9)
-        GPIO.output(bomba1, GPIO.HIGH)
+        time.sleep(7)
+        GPIO.output(bomba4, GPIO.HIGH)
+        
+        time.sleep(13)
+        GPIO.output(bomba2, GPIO.HIGH)
+        GPIO.output(luz, GPIO.HIGH)
         
         time.sleep(1)
         GPIO.cleanup()
