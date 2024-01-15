@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 from . import drinks
+from django.contrib.auth.views import LogoutView
+
 
 urlpatterns = [
     path("index/", views.index, name='index'),
@@ -13,5 +15,5 @@ urlpatterns = [
     path("drink5/", drinks.drink5),
     path("drink6/", drinks.drink6),
     path('admin/', views.admin, name='admin'),
-    
+    path('logout/', views.UserLogout, name='logout')
 ]

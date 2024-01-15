@@ -2,98 +2,161 @@
 <html lang="en">
 <head>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-        }
+       /* Estilos Gerais */
+            body {
+                background-color: #f4f4f4; /* Cor de fundo suave */
+                font-family: 'Arial', sans-serif;
+                margin: 0;
+            }
 
-        .sidebar {
-            height: 100%;
-            width: 200px;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #111;
-            padding-top: 20px;
-            text-align: center;
-        }
+            /* Barra Lateral */
+            .sidebar {
+                height: 100%;
+                width: 200px; /* Largura fixa para a barra lateral */
+                position: fixed;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                background-color: #2c3e50;
+                padding-top: 30px;
+                text-align: center;
+                box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+            }
 
-        .sidebar button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #333;
-            color: white;
-            border: none;
-            outline: none;
-            text-align: left;
-            cursor: pointer;
-        }
+            /* Botões da Barra Lateral */
+            .sidebar button {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                background-color: #34495e;
+                color: white;
+                border: none;
+                outline: none;
+                text-align: left;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
 
-        .sidebar button:hover {
-            background-color: #555;
-        }
+            .sidebar button:hover {
+                background-color: #4a6572;
+            }
 
-        .conteudo {
-            margin-left: 220px;
-            padding: 16px;
-        }
+            /* Área de Conteúdo */
+            .conteudo {
+                margin-left: 220px; /* Espaçamento para a barra lateral */
+                padding: 20px;
+                background-color: #fff;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                margin-top: 20px;
+            }
 
-        .loading-overlay {
-            z-index: 2;
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgb(0, 0, 0);
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
+            /* Formulários */
+            .login-form input[type="text"],
+            
+            .login-form input[type="password"] {
+                border: 1px solid #ddd;
+                margin-bottom: 15px;
+                padding: 10px;
+                border-radius: 4px;
+                width: calc(30% - 22px);
+            }
+            
+            .login{
+                -form input[type="password"]:focus {
+                border-color: #3498db;
+                outline: none;
+            }
 
-        .loading-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-        }
+            /* Tabelas */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
 
-        .loader {
-            border-top: 8px solid #3498db;
-            border-radius: 50%;
-            width: 180px;
-            height: 180px;
-            animation: spin 1s linear infinite;
-            margin-top: 8px;
-            margin-left: auto;
-            margin-right: auto; 
-        }
-        
-        button {
-            margin-top: 10px;
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+            table, th, td {
+                border: 1px solid #ddd;
+            }
 
-        @-webkit-keyframes spin {
-            0% { -webkit-transform: rotate(0deg); }
-            100% { -webkit-transform: rotate(360deg); }
-        }
+            th, td {
+                padding: 10px;
+                text-align: left;
+            }
+
+            th {
+                background-color: #3498db;
+                color: white;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            /* Loader /
+            .loader {
+                border-top: 8px solid #3498db; / Cor primária */
+                border-radius: 50%;
+                width: 180px;
+                height: 180px;
+                animation: spin 1s linear infinite;
+                margin-top: 8px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            table {
+                width: 70%;
+                border-collapse: collapse;
+                margin-top: 20px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para um efeito de elevação */
+                border-radius: 8px; /* Bordas arredondadas */
+                overflow: hidden; /* Para manter a borda arredondada */
+            }
+
+            th, td {
+                padding: 12px 15px; /* Ajuste de espaçamento */
+                text-align: left;
+                border-bottom: 1px solid #ddd; /* Linha divisória entre as células */
+            }
+
+            th {
+                background-color: #3498db; /* Cor de fundo para o cabeçalho */
+                color: white;
+                font-weight: bold;
+            }
+
+            tbody tr {
+                background-color: #f9f9f9;
+            }
+
+            tbody tr:nth-child(odd) {
+                background-color: #efefef; /* Alternar a cor de fundo para as linhas */
+            }
+
+            tbody tr:hover {
+                background-color: #dddfe2; /* Cor de fundo ao passar o mouse */
+            }
+
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+
+            @-webkit-keyframes spin {
+                0% { -webkit-transform: rotate(0deg); }
+                100% { -webkit-transform: rotate(360deg); }
+            }
+
+            /* Botões Gerais */
+            button {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 1em;
+                padding: 10px;
+            }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,14 +164,16 @@
 <body>
     
     <div class="sidebar">
-        <button onclick="window.location.href='/index/'">Voltar</button>
-        <button onclick="mostrarContas()">Gestão de Contas</button>
-        <button onclick="mostrarBombas()">Bombas</button>
-        <button onclick="mostrarDados()">Dados</button>
+        <button id='Sair' style="display: block;" onclick="window.location.href='/logout/'">Sair</button>
+        {% if request.user.is_staff == True %}
+        <button id='GestaoContas' style="display: block;" onclick="mostrarContas()">Gestão de Contas</button>
+        {% endif %}
+        <button id='Bombas' style="display: block;" onclick="mostrarBombas()">Bombas</button>
+        <button id='Dados' style="display: block;" onclick="mostrarDados()">Dados</button>
     </div>
 
     <div class="conteudo" id="conteudoDefault">
-        <h2>Bem-vindo ao Painel de Admin</h2>
+        <h2>Bem-vindo {{ user.get_username }}</h2>
         <p>Escolha uma opção na barra lateral.</p>
     </div>
 
@@ -118,23 +183,56 @@
         <div class="login-form">
             <h2>Criar contas</h2>
                 <p>{{ error }}</p>
-            <form method="post" ">
+            <form method="post" >
                 {% csrf_token %}
                 <label for="username">Username:</label>
                 {{form.username}}
                 <br>
                 <label for="password">Password:</label>
                 {{form.password1}}
+                 <button type="button" onclick="togglePasswordVisibility('id_password1')">👁️</button>
                 <br>
                 <label for="password">Password:</label>
                 {{form.password2}}
+                 <button type="button" onclick="togglePasswordVisibility('id_password2')">👁️</button>
                 <br>
-                <label for="{{ form.is_admin.id_for_label }}">Conta admin:</label>
-                {{ form.is_admin }}
+                <label for="{{ form.is_admin.is_staff }}">Conta admin:</label>
+                {{ form.is_staff }}
                 <br>
-                <button type="submit">Criar Conta</button>
+                <button onclick="">Criar Conta</button>
             </form>
         </div>
+        <div>
+            <h1>Apagar Contas</h1>
+            <form method="post" >
+                {% csrf_token %}
+                <label for="username">Username:</label>
+                {{deleteform.username}}
+                <br>
+                <button onclick="">Apagar Conta</button>
+            </form>
+        </div>
+        <h2>Lista de Utilizadores</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Data criação</th>
+                <th>Ultimo Login</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.date_joined }}</td>
+                    <td>{{ user.last_login }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        
     </div>
     
     <div class="conteudo" id="conteudoBombas" style="display: none;">
@@ -158,6 +256,8 @@
     </div>
 
     <script>
+
+
         function mostrarContas() {
             ocultarTodosOsConteudos();
             document.getElementById("conteudoContas").style.display = "block";
@@ -187,6 +287,15 @@
             setTimeout(() => {
                 window.location.href = url;
             }, 800);
+        }
+        
+        function togglePasswordVisibility(passwordFieldId) {
+            var passwordInput = document.getElementById(passwordFieldId);
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
         }
     </script>
 </body>

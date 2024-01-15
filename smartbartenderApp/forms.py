@@ -4,20 +4,14 @@ from django.contrib.auth.models import User
 from django import forms 
 
 class CreateUserForm(UserCreationForm):
-    is_admin = forms.BooleanField(required=False)
+    is_admin = forms.BooleanField(required=False,initial=False,label='is_staff')
 
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2', 'is_staff']
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_staff = self.cleaned_data['is_staff']
-
-        if commit:
-            user.save()
+    def save(self):
+        user = super(CreateUserForm, self).save(commit=False)
+        user.save()
 
         return user
-
-
-
