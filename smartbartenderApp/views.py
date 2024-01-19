@@ -6,6 +6,8 @@ from django.forms import inlineformset_factory
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
+import RPi.GPIO as GPIO
 
 
 from .forms import CreateUserForm
@@ -22,6 +24,7 @@ def index(request):
             return redirect('admin')
         return render(request,"index.html")
     else:
+        GPIO.cleanup()
         return render(request,"index.html")
     
 
@@ -31,26 +34,36 @@ def select(request):
 @login_required(login_url='/index/')
 def admin(request):
     users = User.objects.all()
-    
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('admin') 
+            messages.success(request, 'Conta criada com sucesso')
+            return redirect('admin')
+        else:
+            for field in form.errors:
+                for error in form.errors[field]:
+                    if error == "A user with that username already exists.":
+                        messages.error(request, "Um utilizador com esse nome á existe.")
+                    else:
+                        messages.error(request, f"{field}: {error}")
     else:
         form = CreateUserForm()
 
-    return render(request, "admin.html", {'form': form,'users': users})
+    return render(request, "admin.html", {'form': form, 'users': users})
+
 
 def UserLogout(request):
     logout(request)
     return redirect('index')
     
-def DeleteUser(request, username):    
-    try:
-        duser = User.objects.get(username = username)
-        duser.delete()
-        messages.sucess(request, "The user is deleted")
-    except:
-      messages.error(request, "The user not found")    
-    return render(request, 'front.html')
+def DeleteUser(request):    
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        try:
+            duser = User.objects.get(username=username)
+            duser.delete()
+            messages.success(request, "O user foi apagado com sucesso")
+        except User.DoesNotExist:
+            messages.error(request, "User não encontrado")    
+        return redirect('admin')

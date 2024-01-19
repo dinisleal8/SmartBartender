@@ -169,12 +169,18 @@
         <button id='GestaoContas' style="display: block;" onclick="mostrarContas()">Gestão de Contas</button>
         {% endif %}
         <button id='Bombas' style="display: block;" onclick="mostrarBombas()">Bombas</button>
-        <button id='Dados' style="display: block;" onclick="mostrarDados()">Dados</button>
     </div>
 
     <div class="conteudo" id="conteudoDefault">
         <h2>Bem-vindo {{ user.get_username }}</h2>
         <p>Escolha uma opção na barra lateral.</p>
+            {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
     </div>
 
     <div class="conteudo" id="conteudoContas" style="display: none;">
@@ -204,12 +210,12 @@
         </div>
         <div>
             <h1>Apagar Contas</h1>
-            <form method="post" >
+            <form method="post" action="{% url 'delete_user' %}">
                 {% csrf_token %}
                 <label for="username">Username:</label>
-                {{deleteform.username}}
+                <input type="text" name="username" required>
                 <br>
-                <button onclick="">Apagar Conta</button>
+                <button type="submit">Apagar Conta</button>
             </form>
         </div>
         <h2>Lista de Utilizadores</h2>
@@ -239,12 +245,7 @@
         <!-- Conteúdo para Bombas -->
         <h1>Gerir Bombas</h1>
         <h2>Ferrar Bombas</h2>
-        <button onclick="loading('/ferrar/')">Nigga What</button>
-    </div>
-
-    <div class="conteudo" id="conteudoDados" style="display: none;">
-        <!-- Conteúdo para Dados -->
-        <h1>Dados</h2>
+        <button onclick="loading('/ferrar/')">Ferrar Bombas</button>
     </div>
     
 <div class="loading-overlay" id="loadingOverlay">
@@ -256,7 +257,6 @@
     </div>
 
     <script>
-
 
         function mostrarContas() {
             ocultarTodosOsConteudos();
@@ -277,7 +277,6 @@
             document.getElementById("conteudoDefault").style.display = "none";
             document.getElementById("conteudoContas").style.display = "none";
             document.getElementById("conteudoBombas").style.display = "none";
-            document.getElementById("conteudoDados").style.display = "none";
         }
 
         function loading(url) {
