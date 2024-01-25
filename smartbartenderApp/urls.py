@@ -17,5 +17,7 @@ urlpatterns = [
     path("drink6/", drinks.drink6),
     path('admin/', views.admin, name='admin'),
     path('logout/', views.UserLogout, name='logout'),
-    path('delete_user/', views.DeleteUser, name='delete_user')
+    path('delete_user/', views.DeleteUser, name='delete_user'),
+    path('desligar/', views.desligar, name='desligar'),
+	path('reiniciar/', views.reboot, name='reboot')
 ]

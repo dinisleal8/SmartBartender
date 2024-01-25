@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 import RPi.GPIO as GPIO
-
+from flask import Flask
+import os
 
 from .forms import CreateUserForm
 
@@ -67,3 +68,12 @@ def DeleteUser(request):
         except User.DoesNotExist:
             messages.error(request, "User não encontrado")    
         return redirect('admin')
+
+def desligar(request):
+    os.system('sudo shutdown now')
+    return 'A desligar o Raspberry Pi...'
+    
+def reboot(request):
+    os.system('sudo reboot now')
+    return 'A reiniciar o Raspberry Pi...'
+

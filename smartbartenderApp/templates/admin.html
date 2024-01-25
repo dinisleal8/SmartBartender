@@ -169,6 +169,9 @@
         <button id='GestaoContas' style="display: block;" onclick="mostrarContas()">Gestão de Contas</button>
         {% endif %}
         <button id='Bombas' style="display: block;" onclick="mostrarBombas()">Bombas</button>
+        {% if request.user.is_staff == True %}
+        <button id='GerirMaquina' style="display: block;" onclick="mostrarMaquina()">Gerir máquina</button>
+        {% endif %}
     </div>
 
     <div class="conteudo" id="conteudoDefault">
@@ -248,6 +251,14 @@
         <button onclick="loading('/ferrar/')">Ferrar Bombas</button>
     </div>
     
+	<div class="conteudo" id="conteudoMaquina" style="display: none;">
+        <!-- Conteúdo para Gerir Máquina -->
+        <h1>Gerir Máquina</h1>
+        <h2>Desligar</h2>
+        <button onclick="desligarRaspberryPi()">Executar</button>
+        <h2>Reiniciar</h2>
+        <button onclick="reiniciarRaspberryPi()">Executar</button>
+    </div>
 <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-content">
             <div class="loader"></div>
@@ -272,11 +283,16 @@
             ocultarTodosOsConteudos();
             document.getElementById("conteudoDados").style.display = "block";
         }
+        function mostrarMaquina() {
+            ocultarTodosOsConteudos();
+            document.getElementById("conteudoMaquina").style.display = "block";
+        }
 
         function ocultarTodosOsConteudos() {
             document.getElementById("conteudoDefault").style.display = "none";
             document.getElementById("conteudoContas").style.display = "none";
             document.getElementById("conteudoBombas").style.display = "none";
+            document.getElementById("conteudoMaquina").style.display = "none";
         }
 
         function loading(url) {
@@ -296,6 +312,13 @@
                 passwordInput.type = "password";
             }
         }
+        function desligarRaspberryPi(){
+			window.location.href = "/desligar/";
+		}
+		function reiniciarRaspberryPi(){
+			window.location.href = "/reiniciar/";
+		}
+        
     </script>
 </body>
 </html>
